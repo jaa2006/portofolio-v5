@@ -174,9 +174,13 @@ function App() {
         <header className="relative px-6 py-8 md:px-12 md:py-12">
           <div className="max-w-6xl mx-auto">
             {/* Vertical Navigation - Behind Header Text */}
-            <div className={`fixed left-4 top-1/2 transform -translate-y-1/2 z-10 transition-all duration-500 ${
+            <div className={`fixed left-4 z-10 transition-all duration-500 ${
               navigationVisible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-8 pointer-events-none'
-            }`}>
+            }`}
+            style={{
+              top: `${Math.max(50, Math.min(window.innerHeight - 400, 50 + scrollY * 0.1))}%`,
+              transform: `translateY(-50%) ${navigationVisible ? 'translateX(0)' : 'translateX(-2rem)'}`
+            }}>
               <div className={`flex flex-col space-y-2 p-2 rounded-xl backdrop-blur-md transition-all duration-300 ${
                 darkMode 
                   ? 'bg-white/5 border border-white/5' 
@@ -548,7 +552,7 @@ function App() {
                       title: "Karang Taruna 3D Hub 27",
                       description: language === 'id' ? "Website organisasi Karang Taruna Leuwiliang RW 07 dengan sistem manajemen kegiatan dan informasi lengkap" : "Karang Taruna Leuwiliang RW 07 organization website with activity management system and complete information",
                       tech: "React, TypeScript, 3D Components, Tailwind CSS",
-                      link: "https://github.com/jaa2006/karang-taruna-3d-hub-27",
+                      link: "https://karang-taruna-rw-07.vercel.app/",
                       image: "/Screenshot (186).png"
                     }
                   ].map((project, index) => (
