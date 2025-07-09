@@ -534,23 +534,11 @@ function App() {
                 <div className="relative">
                   {/* Character GIF - Top Center */}
                   <div className="flex justify-center mb-12">
-                    <div className="relative">
-                      <img
-                        src="/415e190d9a9140ddb0570ecff2460fcb.gif"
-                        alt="Zulfikar Sandira - Professional Developer"
-                        className="w-48 h-48 md:w-56 md:h-56 rounded-full object-cover border-4 border-opacity-20 transition-transform duration-300 hover:scale-105"
-                        style={{ 
-                          borderColor: darkMode ? 'rgba(255,255,255,0.2)' : 'rgba(0,0,0,0.2)',
-                          filter: darkMode ? 'brightness(0.95) contrast(1.05)' : 'brightness(1.05) contrast(1.02)'
-                        }}
-                      />
-                      {/* Glow effect */}
-                      <div className={`absolute inset-0 rounded-full transition-opacity duration-300 opacity-0 hover:opacity-30 ${
-                        darkMode 
-                          ? 'bg-gradient-radial from-white/20 via-transparent to-transparent' 
-                          : 'bg-gradient-radial from-black/10 via-transparent to-transparent'
-                      }`}></div>
-                    </div>
+                    <img
+                      src="/415e190d9a9140ddb0570ecff2460fcb.gif"
+                      alt="Zulfikar Sandira - Professional Developer"
+                      className="w-48 h-48 md:w-56 md:h-56"
+                    />
                   </div>
 
                   {/* Connecting Line */}
