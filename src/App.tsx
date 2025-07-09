@@ -37,7 +37,9 @@ function App() {
   // Track scroll position for navbar positioning
   useEffect(() => {
     const handleScroll = () => {
-      setScrollY(window.scrollY);
+      requestAnimationFrame(() => {
+        setScrollY(window.scrollY);
+      });
     };
 
     window.addEventListener('scroll', handleScroll);
@@ -178,8 +180,8 @@ function App() {
               navigationVisible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-8 pointer-events-none'
             }`}
             style={{
-              top: `${Math.max(50, Math.min(window.innerHeight - 400, 50 + scrollY * 0.1))}%`,
-              transform: `translateY(-50%) ${navigationVisible ? 'translateX(0)' : 'translateX(-2rem)'}`
+              top: `${Math.max(80, Math.min(window.innerHeight - 350, 80 + scrollY * 0.05))}px`,
+              transform: navigationVisible ? 'translateX(0)' : 'translateX(-2rem)'
             }}>
               <div className={`flex flex-col space-y-2 p-2 rounded-xl backdrop-blur-md transition-all duration-300 ${
                 darkMode 
@@ -511,7 +513,7 @@ function App() {
             {activeSection === 'projects' && (
               <div className="max-w-6xl mx-auto">
                 <h2 className="text-4xl md:text-6xl font-black mb-12 text-center">{t.projectsTitle}</h2>
-                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 min-h-[60vh]">
                   {[
                     {
                       title: "SMK Al-Amah Sindulang Website",
@@ -557,7 +559,7 @@ function App() {
                     }
                   ].map((project, index) => (
                     <div key={index} className="group cursor-pointer" onClick={() => project.link !== '#' && window.open(project.link, '_blank')}>
-                      <div className={`p-6 rounded-lg transition-all duration-300 hover:shadow-lg ${
+                      <div className={`p-6 rounded-lg transition-all duration-300 hover:shadow-lg hover:scale-[1.02] ${
                         darkMode ? 'bg-white/5 hover:bg-white/10' : 'bg-white/40 hover:bg-white/60'
                       }`}>
                         {/* Project Image */}
@@ -591,6 +593,15 @@ function App() {
                       </div>
                     </div>
                   ))}
+                </div>
+                
+                {/* Additional spacing to prevent blank area */}
+                <div className="mt-16 text-center">
+                  <p className="text-lg opacity-60 font-serif italic">
+                    {language === 'id' 
+                      ? 'Lebih banyak project menarik sedang dalam pengembangan...' 
+                      : 'More exciting projects are currently in development...'}
+                  </p>
                 </div>
               </div>
             )}
