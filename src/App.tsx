@@ -535,7 +535,7 @@ function App() {
                   {/* Character GIF - Top Center */}
                   <div className="flex justify-center mb-12">
                     <img
-                      src="/415e190d9a9140ddb0570ecff2460fcb.gif"
+                      src="/miku-vocaloid.gif"
                       alt="Zulfikar Sandira - Professional Developer"
                       className="w-48 h-48 md:w-56 md:h-56"
                     />
