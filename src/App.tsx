@@ -55,6 +55,7 @@ function App() {
       observer.disconnect();
     };
   }, [activeSection]);
+
   // Track scroll position for navbar positioning
   useEffect(() => {
     const handleScroll = () => {
@@ -67,7 +68,7 @@ function App() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Calculate navbar position based on scroll
+  // Calculate navbar position based on scroll - follows user from top to bottom
   const calculateNavbarPosition = () => {
     if (windowHeight === 0 || documentHeight === 0) return 120;
     
@@ -76,15 +77,18 @@ function App() {
     
     // Start position (top of page)
     const startPosition = 120;
-    // End position (bottom of page) - account for navbar height
-    const endPosition = windowHeight - 400; // 400px is approximate navbar height
+    // End position (bottom of page) - account for navbar height and footer
+    const navbarHeight = 400; // Approximate navbar height
+    const bottomPadding = 100; // Space from bottom
+    const endPosition = windowHeight - navbarHeight - bottomPadding;
     
-    // Calculate position based on scroll progress
-    const calculatedPosition = startPosition + (endPosition - startPosition) * scrollProgress;
+    // Smooth interpolation across entire scroll range
+    const targetPosition = startPosition + (endPosition - startPosition) * scrollProgress;
     
-    // Ensure navbar stays within viewport bounds
-    return Math.max(60, Math.min(calculatedPosition, windowHeight - 350));
+    // Only prevent going too high, allow full range of movement down
+    return Math.max(60, targetPosition);
   };
+
   const handleOnboardingComplete = (preferences: { darkMode: boolean; musicEnabled: boolean }) => {
     setDarkMode(preferences.darkMode);
     setMusicEnabled(preferences.musicEnabled);
@@ -215,8 +219,8 @@ function App() {
         {/* Header */}
         <header className="relative px-6 py-8 md:px-12 md:py-12">
           <div className="max-w-6xl mx-auto">
-            {/* Vertical Navigation - Behind Header Text */}
-            <div className={`fixed left-4 z-10 transition-all duration-200 ${
+            {/* Vertical Navigation - Follows scroll smoothly from top to bottom */}
+            <div className={`fixed left-4 z-10 transition-all duration-150 ${
               navigationVisible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-8 pointer-events-none'
             }`}
             style={{
@@ -392,8 +396,9 @@ function App() {
 
             {/* Top Navigation */}
             <nav className="relative z-20 flex justify-between items-center mb-8">
-              {/* Language Toggle and Hide Navigation */}
+              {/* Language Toggle and Hide Navigation - Repositioned */}
               <div className="flex items-center space-x-2">
+                {/* Language buttons grouped together */}
                 <div className="flex items-center space-x-2">
                   <button
                     onClick={() => toggleLanguage('id')}
@@ -425,7 +430,7 @@ function App() {
                   </button>
                 </div>
 
-                {/* Hide/Show Navigation Button */}
+                {/* Hide/Show Navigation Button - Now positioned after language buttons */}
                 <button
                   onClick={toggleNavigation}
                   className="p-2 rounded-full hover:bg-black/10 dark:hover:bg-white/10 transition-colors duration-200 ml-2"
@@ -640,7 +645,7 @@ function App() {
                   ))}
                 </div>
                 
-                {/* Additional spacing to prevent blank area */}
+                {/* Additional content to prevent blank area */}
                 <div className="mt-16 text-center">
                   <p className="text-lg opacity-60 font-serif italic">
                     {language === 'id' 
