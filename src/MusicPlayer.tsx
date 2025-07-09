@@ -37,15 +37,22 @@ const MusicPlayer: React.FC<MusicPlayerProps> = ({ darkMode, autoPlay = false })
 
     const updateTime = () => setCurrentTime(audio.currentTime);
     const updateDuration = () => setDuration(audio.duration);
+    const handlePlay = () => setIsPlaying(true);
+    const handlePause = () => setIsPlaying(false);
+    const handleEnded = () => setIsPlaying(false);
     
     audio.addEventListener('timeupdate', updateTime);
     audio.addEventListener('loadedmetadata', updateDuration);
-    audio.addEventListener('ended', () => setIsPlaying(false));
+    audio.addEventListener('play', handlePlay);
+    audio.addEventListener('pause', handlePause);
+    audio.addEventListener('ended', handleEnded);
 
     return () => {
       audio.removeEventListener('timeupdate', updateTime);
       audio.removeEventListener('loadedmetadata', updateDuration);
-      audio.removeEventListener('ended', () => setIsPlaying(false));
+      audio.removeEventListener('play', handlePlay);
+      audio.removeEventListener('pause', handlePause);
+      audio.removeEventListener('ended', handleEnded);
     };
   }, []);
 
@@ -56,9 +63,14 @@ const MusicPlayer: React.FC<MusicPlayerProps> = ({ darkMode, autoPlay = false })
     if (isPlaying) {
       audio.pause();
     } else {
-      audio.play();
+      const playPromise = audio.play();
+      if (playPromise !== undefined) {
+        playPromise.catch((error) => {
+          console.log('Play failed:', error);
+          setIsPlaying(false);
+        });
+      }
     }
-    setIsPlaying(!isPlaying);
   };
 
   const toggleMute = () => {
@@ -91,6 +103,7 @@ const MusicPlayer: React.FC<MusicPlayerProps> = ({ darkMode, autoPlay = false })
         ref={audioRef}
         src="/v4.www-y2mate.blog - Lost Saga BGM - Wild West (64 KBps).mp3"
         preload="metadata"
+        volume={volume}
       />
       
       {/* Music Player Button */}

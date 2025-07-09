@@ -16,6 +16,7 @@ function App() {
   const [showOnboarding, setShowOnboarding] = useState(true);
   const [musicEnabled, setMusicEnabled] = useState(false);
   const [language, setLanguage] = useState<Language>('id');
+  const [scrollY, setScrollY] = useState(0);
 
   useEffect(() => {
     // Check if user has completed onboarding before
@@ -33,6 +34,15 @@ function App() {
     setIsLoaded(true);
   }, []);
 
+  // Track scroll position for navbar positioning
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrollY(window.scrollY);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
   const handleOnboardingComplete = (preferences: { darkMode: boolean; musicEnabled: boolean }) => {
     setDarkMode(preferences.darkMode);
     setMusicEnabled(preferences.musicEnabled);
@@ -535,11 +545,11 @@ function App() {
                       image: "/image.png"
                     },
                     {
-                      title: "Karang Taruna Website",
-                      description: language === 'id' ? "Website organisasi Karang Taruna dengan sistem manajemen kegiatan" : "Karang Taruna organization website with activity management system",
-                      tech: "React, TypeScript, CMS",
-                      link: "#",
-                      image: "/image.png"
+                      title: "Karang Taruna 3D Hub 27",
+                      description: language === 'id' ? "Website organisasi Karang Taruna Leuwiliang RW 07 dengan sistem manajemen kegiatan dan informasi lengkap" : "Karang Taruna Leuwiliang RW 07 organization website with activity management system and complete information",
+                      tech: "React, TypeScript, 3D Components, Tailwind CSS",
+                      link: "https://github.com/jaa2006/karang-taruna-3d-hub-27",
+                      image: "/Screenshot (186).png"
                     }
                   ].map((project, index) => (
                     <div key={index} className="group cursor-pointer" onClick={() => project.link !== '#' && window.open(project.link, '_blank')}>
