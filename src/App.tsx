@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Moon, Sun, Github, Mail, FileText, Info, Eye, EyeOff, Home, User, Briefcase, Award, MessageCircle } from 'lucide-react';
+import { Moon, Sun, Github, Mail, FileText, Info, Eye, EyeOff, Home, User, Briefcase, Award, MessageCircle, Zap } from 'lucide-react';
 import FuzzyText from './FuzzyText';
 import ScrollVelocity from './ScrollVelocity';
 import MusicPlayer from './MusicPlayer';
