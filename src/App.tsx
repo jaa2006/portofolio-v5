@@ -176,11 +176,11 @@ function App() {
         <header className="relative px-6 py-8 md:px-12 md:py-12">
           <div className="max-w-6xl mx-auto">
             {/* Vertical Navigation - Behind Header Text */}
-            <div className={`fixed left-4 z-10 transition-all duration-500 ${
+            <div className={`fixed left-4 z-10 transition-all duration-200 ${
               navigationVisible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-8 pointer-events-none'
             }`}
             style={{
-              top: `${Math.max(80, Math.min(window.innerHeight - 350, 80 + scrollY * 0.05))}px`,
+              top: `${Math.max(120, Math.min(window.innerHeight - 350, 120 + scrollY * 0.15))}px`,
               transform: navigationVisible ? 'translateX(0)' : 'translateX(-2rem)'
             }}>
               <div className={`flex flex-col space-y-2 p-2 rounded-xl backdrop-blur-md transition-all duration-300 ${
@@ -353,36 +353,48 @@ function App() {
             {/* Top Navigation */}
             <nav className="relative z-20 flex justify-between items-center mb-8">
               {/* Language Toggle */}
-              <div className="flex items-center space-x-2">
+              <div className="flex items-center space-x-4">
+                <div className="flex items-center space-x-2">
+                  <button
+                    onClick={() => toggleLanguage('id')}
+                    className={`px-3 py-1 text-sm font-medium rounded-lg transition-all duration-200 ${
+                      language === 'id'
+                        ? darkMode 
+                          ? 'bg-white/15 text-white' 
+                          : 'bg-black/15 text-black'
+                        : darkMode
+                          ? 'hover:bg-white/8 text-white/60 hover:text-white'
+                          : 'hover:bg-black/8 text-black/60 hover:text-black'
+                    }`}
+                  >
+                    ID
+                  </button>
+                  <button
+                    onClick={() => toggleLanguage('en')}
+                    className={`px-3 py-1 text-sm font-medium rounded-lg transition-all duration-200 ${
+                      language === 'en'
+                        ? darkMode 
+                          ? 'bg-white/15 text-white' 
+                          : 'bg-black/15 text-black'
+                        : darkMode
+                          ? 'hover:bg-white/8 text-white/60 hover:text-white'
+                          : 'hover:bg-black/8 text-black/60 hover:text-black'
+                    }`}
+                  >
+                    EN
+                  </button>
+                </div>
+                
+                {/* Hide/Show Navigation Button */}
                 <button
-                  onClick={() => toggleLanguage('id')}
-                  className={`px-3 py-1 text-sm font-medium rounded-lg transition-all duration-200 ${
-                    language === 'id'
-                      ? darkMode 
-                        ? 'bg-white/15 text-white' 
-                        : 'bg-black/15 text-black'
-                      : darkMode
-                        ? 'hover:bg-white/8 text-white/60 hover:text-white'
-                        : 'hover:bg-black/8 text-black/60 hover:text-black'
-                  }`}
+                  onClick={toggleNavigation}
+                  className="p-2 rounded-full hover:bg-black/10 dark:hover:bg-white/10 transition-colors duration-200"
+                  title={navigationVisible ? t.hideNav : t.showNav}
                 >
-                  ID
-                </button>
-                <button
-                  onClick={() => toggleLanguage('en')}
-                  className={`px-3 py-1 text-sm font-medium rounded-lg transition-all duration-200 ${
-                    language === 'en'
-                      ? darkMode 
-                        ? 'bg-white/15 text-white' 
-                        : 'bg-black/15 text-black'
-                      : darkMode
-                        ? 'hover:bg-white/8 text-white/60 hover:text-white'
-                        : 'hover:bg-black/8 text-black/60 hover:text-black'
-                  }`}
-                >
-                  EN
+                  {navigationVisible ? <EyeOff size={18} /> : <Eye size={18} />}
                 </button>
               </div>
+              
               <div className="flex items-center space-x-4">
                 {/* Music Player Button */}
                 <MusicPlayer darkMode={darkMode} autoPlay={musicEnabled} />
@@ -391,13 +403,6 @@ function App() {
                   className="p-2 rounded-full hover:bg-black/10 dark:hover:bg-white/10 transition-colors duration-200"
                 >
                   {darkMode ? <Sun size={18} /> : <Moon size={18} />}
-                </button>
-                <button
-                  onClick={toggleNavigation}
-                  className="p-2 rounded-full hover:bg-black/10 dark:hover:bg-white/10 transition-colors duration-200"
-                  title={navigationVisible ? t.hideNav : t.showNav}
-                >
-                  {navigationVisible ? <EyeOff size={18} /> : <Eye size={18} />}
                 </button>
               </div>
             </nav>
