@@ -529,30 +529,153 @@ function App() {
             {activeSection === 'about' && (
               <div className="max-w-4xl mx-auto">
                 <h2 className="text-4xl md:text-6xl font-black mb-8 text-center">{t.aboutTitle}</h2>
-                <div className="grid md:grid-cols-2 gap-12">
-                  <div>
-                    <h3 className="text-2xl font-bold mb-4">{t.backgroundTitle}</h3>
-                    <p className="text-lg leading-relaxed mb-6 opacity-80">
-                      {t.backgroundText1}
-                    </p>
-                    <p className="text-lg leading-relaxed opacity-80">
-                      {t.backgroundText2}
-                    </p>
+                
+                {/* Professional Flowchart Layout */}
+                <div className="relative">
+                  {/* Character GIF - Top Center */}
+                  <div className="flex justify-center mb-12">
+                    <div className="relative">
+                      <img
+                        src="/415e190d9a9140ddb0570ecff2460fcb.gif"
+                        alt="Zulfikar Sandira - Professional Developer"
+                        className="w-48 h-48 md:w-56 md:h-56 rounded-full object-cover border-4 border-opacity-20 transition-transform duration-300 hover:scale-105"
+                        style={{ 
+                          borderColor: darkMode ? 'rgba(255,255,255,0.2)' : 'rgba(0,0,0,0.2)',
+                          filter: darkMode ? 'brightness(0.95) contrast(1.05)' : 'brightness(1.05) contrast(1.02)'
+                        }}
+                      />
+                      {/* Glow effect */}
+                      <div className={`absolute inset-0 rounded-full transition-opacity duration-300 opacity-0 hover:opacity-30 ${
+                        darkMode 
+                          ? 'bg-gradient-radial from-white/20 via-transparent to-transparent' 
+                          : 'bg-gradient-radial from-black/10 via-transparent to-transparent'
+                      }`}></div>
+                    </div>
                   </div>
-                  <div>
-                    <h3 className="text-2xl font-bold mb-4">{t.skillsTitle}</h3>
-                    <div className="space-y-4">
-                      <div>
-                        <h4 className="font-semibold mb-2">{t.frontend}</h4>
-                        <p className="opacity-80">{t.frontendSkills}</p>
+
+                  {/* Connecting Line */}
+                  <div className={`w-px h-8 mx-auto mb-8 ${darkMode ? 'bg-white/30' : 'bg-black/30'}`}></div>
+
+                  {/* Background Section - First Node */}
+                  <div className="relative mb-16">
+                    <div className={`max-w-2xl mx-auto p-8 rounded-2xl border-2 transition-all duration-300 hover:shadow-lg ${
+                      darkMode 
+                        ? 'bg-white/5 border-white/20 hover:bg-white/10' 
+                        : 'bg-white/40 border-black/20 hover:bg-white/60'
+                    }`}>
+                      <div className="text-center">
+                        <div className={`inline-flex items-center justify-center w-12 h-12 rounded-full mb-4 ${
+                          darkMode ? 'bg-white/15' : 'bg-black/15'
+                        }`}>
+                          <User size={24} className="opacity-80" />
+                        </div>
+                        <h3 className="text-2xl font-bold mb-4">{t.backgroundTitle}</h3>
+                        <p className="text-lg leading-relaxed mb-4 opacity-80">
+                          {t.backgroundText1}
+                        </p>
+                        <p className="text-lg leading-relaxed opacity-80">
+                          {t.backgroundText2}
+                        </p>
                       </div>
-                      <div>
-                        <h4 className="font-semibold mb-2">{t.backend}</h4>
-                        <p className="opacity-80">{t.backendSkills}</p>
+                    </div>
+                    
+                    {/* Connecting Line Down */}
+                    <div className={`w-px h-12 mx-auto mt-8 ${darkMode ? 'bg-white/30' : 'bg-black/30'}`}></div>
+                  </div>
+
+                  {/* Skills Section - Branching Nodes */}
+                  <div className="relative">
+                    <div className="text-center mb-8">
+                      <h3 className="text-2xl font-bold mb-4">{t.skillsTitle}</h3>
+                    </div>
+
+                    {/* Skills Grid with Connecting Lines */}
+                    <div className="relative">
+                      {/* Horizontal connecting line */}
+                      <div className={`absolute top-16 left-1/2 transform -translate-x-1/2 w-3/4 h-px ${darkMode ? 'bg-white/30' : 'bg-black/30'} hidden md:block`}></div>
+                      
+                      {/* Vertical connecting lines to each skill */}
+                      <div className={`absolute top-16 left-1/4 w-px h-8 ${darkMode ? 'bg-white/30' : 'bg-black/30'} hidden md:block`}></div>
+                      <div className={`absolute top-16 left-1/2 transform -translate-x-1/2 w-px h-8 ${darkMode ? 'bg-white/30' : 'bg-black/30'} hidden md:block`}></div>
+                      <div className={`absolute top-16 right-1/4 w-px h-8 ${darkMode ? 'bg-white/30' : 'bg-black/30'} hidden md:block`}></div>
+
+                      <div className="grid md:grid-cols-3 gap-8 mt-12">
+                        {/* Frontend Skill Node */}
+                        <div className={`p-6 rounded-xl border-2 text-center transition-all duration-300 hover:shadow-lg hover:scale-105 ${
+                          darkMode 
+                            ? 'bg-white/5 border-white/20 hover:bg-white/10' 
+                            : 'bg-white/40 border-black/20 hover:bg-white/60'
+                        }`}>
+                          <div className={`inline-flex items-center justify-center w-10 h-10 rounded-full mb-3 ${
+                            darkMode ? 'bg-blue-500/20 text-blue-400' : 'bg-blue-500/20 text-blue-600'
+                          }`}>
+                            <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                              <path d="M3 4a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1V4zM3 10a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H4a1 1 0 01-1-1v-6zM14 9a1 1 0 00-1 1v6a1 1 0 001 1h2a1 1 0 001-1v-6a1 1 0 00-1-1h-2z" />
+                            </svg>
+                          </div>
+                          <h4 className="font-bold text-lg mb-2">{t.frontend}</h4>
+                          <p className="opacity-80 text-sm leading-relaxed">{t.frontendSkills}</p>
+                        </div>
+
+                        {/* Backend Skill Node */}
+                        <div className={`p-6 rounded-xl border-2 text-center transition-all duration-300 hover:shadow-lg hover:scale-105 ${
+                          darkMode 
+                            ? 'bg-white/5 border-white/20 hover:bg-white/10' 
+                            : 'bg-white/40 border-black/20 hover:bg-white/60'
+                        }`}>
+                          <div className={`inline-flex items-center justify-center w-10 h-10 rounded-full mb-3 ${
+                            darkMode ? 'bg-green-500/20 text-green-400' : 'bg-green-500/20 text-green-600'
+                          }`}>
+                            <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                              <path fillRule="evenodd" d="M2 5a2 2 0 012-2h12a2 2 0 012 2v10a2 2 0 01-2 2H4a2 2 0 01-2-2V5zm3.293 1.293a1 1 0 011.414 0l3 3a1 1 0 010 1.414l-3 3a1 1 0 01-1.414-1.414L7.586 10 5.293 7.707a1 1 0 010-1.414zM11 12a1 1 0 100 2h3a1 1 0 100-2h-3z" clipRule="evenodd" />
+                            </svg>
+                          </div>
+                          <h4 className="font-bold text-lg mb-2">{t.backend}</h4>
+                          <p className="opacity-80 text-sm leading-relaxed">{t.backendSkills}</p>
+                        </div>
+
+                        {/* Cybersecurity Skill Node */}
+                        <div className={`p-6 rounded-xl border-2 text-center transition-all duration-300 hover:shadow-lg hover:scale-105 ${
+                          darkMode 
+                            ? 'bg-white/5 border-white/20 hover:bg-white/10' 
+                            : 'bg-white/40 border-black/20 hover:bg-white/60'
+                        }`}>
+                          <div className={`inline-flex items-center justify-center w-10 h-10 rounded-full mb-3 ${
+                            darkMode ? 'bg-red-500/20 text-red-400' : 'bg-red-500/20 text-red-600'
+                          }`}>
+                            <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                              <path fillRule="evenodd" d="M2.166 4.999A11.954 11.954 0 0010 1.944 11.954 11.954 0 0017.834 5c.11.65.166 1.32.166 2.001 0 5.225-3.34 9.67-8 11.317C5.34 16.67 2 12.225 2 7c0-.682.057-1.35.166-2.001zm11.541 3.708a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                            </svg>
+                          </div>
+                          <h4 className="font-bold text-lg mb-2">{t.cybersecurity}</h4>
+                          <p className="opacity-80 text-sm leading-relaxed">{t.cybersecuritySkills}</p>
+                        </div>
                       </div>
-                      <div>
-                        <h4 className="font-semibold mb-2">{t.cybersecurity}</h4>
-                        <p className="opacity-80">{t.cybersecuritySkills}</p>
+                    </div>
+
+                    {/* Final Connecting Line */}
+                    <div className={`w-px h-12 mx-auto mt-12 ${darkMode ? 'bg-white/30' : 'bg-black/30'}`}></div>
+
+                    {/* Bottom Summary Node */}
+                    <div className="mt-8">
+                      <div className={`max-w-xl mx-auto p-6 rounded-2xl border-2 text-center transition-all duration-300 hover:shadow-lg ${
+                        darkMode 
+                          ? 'bg-white/5 border-white/20 hover:bg-white/10' 
+                          : 'bg-white/40 border-black/20 hover:bg-white/60'
+                      }`}>
+                        <div className={`inline-flex items-center justify-center w-10 h-10 rounded-full mb-3 ${
+                          darkMode ? 'bg-purple-500/20 text-purple-400' : 'bg-purple-500/20 text-purple-600'
+                        }`}>
+                          <Zap size={20} />
+                        </div>
+                        <h4 className="font-bold text-lg mb-2">
+                          {language === 'id' ? 'Siap Berkolaborasi' : 'Ready to Collaborate'}
+                        </h4>
+                        <p className="opacity-80 text-sm">
+                          {language === 'id' 
+                            ? 'Menggabungkan keahlian teknis dengan passion untuk menciptakan solusi inovatif' 
+                            : 'Combining technical expertise with passion to create innovative solutions'}
+                        </p>
                       </div>
                     </div>
                   </div>
