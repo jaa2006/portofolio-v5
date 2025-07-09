@@ -17,6 +17,8 @@ function App() {
   const [musicEnabled, setMusicEnabled] = useState(false);
   const [language, setLanguage] = useState<Language>('id');
   const [scrollY, setScrollY] = useState(0);
+  const [windowHeight, setWindowHeight] = useState(0);
+  const [documentHeight, setDocumentHeight] = useState(0);
 
   useEffect(() => {
     // Check if user has completed onboarding before
@@ -34,6 +36,25 @@ function App() {
     setIsLoaded(true);
   }, []);
 
+  // Track window and document dimensions
+  useEffect(() => {
+    const updateDimensions = () => {
+      setWindowHeight(window.innerHeight);
+      setDocumentHeight(document.documentElement.scrollHeight);
+    };
+
+    updateDimensions();
+    window.addEventListener('resize', updateDimensions);
+    
+    // Also update when content changes
+    const observer = new MutationObserver(updateDimensions);
+    observer.observe(document.body, { childList: true, subtree: true });
+
+    return () => {
+      window.removeEventListener('resize', updateDimensions);
+      observer.disconnect();
+    };
+  }, [activeSection]);
   // Track scroll position for navbar positioning
   useEffect(() => {
     const handleScroll = () => {
@@ -45,6 +66,25 @@ function App() {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  // Calculate navbar position based on scroll
+  const calculateNavbarPosition = () => {
+    if (windowHeight === 0 || documentHeight === 0) return 120;
+    
+    const maxScroll = documentHeight - windowHeight;
+    const scrollProgress = maxScroll > 0 ? scrollY / maxScroll : 0;
+    
+    // Start position (top of page)
+    const startPosition = 120;
+    // End position (bottom of page) - account for navbar height
+    const endPosition = windowHeight - 400; // 400px is approximate navbar height
+    
+    // Calculate position based on scroll progress
+    const calculatedPosition = startPosition + (endPosition - startPosition) * scrollProgress;
+    
+    // Ensure navbar stays within viewport bounds
+    return Math.max(60, Math.min(calculatedPosition, windowHeight - 350));
+  };
   const handleOnboardingComplete = (preferences: { darkMode: boolean; musicEnabled: boolean }) => {
     setDarkMode(preferences.darkMode);
     setMusicEnabled(preferences.musicEnabled);
@@ -180,7 +220,7 @@ function App() {
               navigationVisible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-8 pointer-events-none'
             }`}
             style={{
-              top: `${Math.max(120, Math.min(window.innerHeight - 350, 120 + scrollY * 0.15))}px`,
+              top: `${calculateNavbarPosition()}px`,
               transform: navigationVisible ? 'translateX(0)' : 'translateX(-2rem)'
             }}>
               <div className={`flex flex-col space-y-2 p-2 rounded-xl backdrop-blur-md transition-all duration-300 ${
@@ -352,8 +392,8 @@ function App() {
 
             {/* Top Navigation */}
             <nav className="relative z-20 flex justify-between items-center mb-8">
-              {/* Language Toggle */}
-              <div className="flex items-center space-x-4">
+              {/* Language Toggle and Hide Navigation */}
+              <div className="flex items-center space-x-2">
                 <div className="flex items-center space-x-2">
                   <button
                     onClick={() => toggleLanguage('id')}
@@ -384,17 +424,17 @@ function App() {
                     EN
                   </button>
                 </div>
-                
+
                 {/* Hide/Show Navigation Button */}
                 <button
                   onClick={toggleNavigation}
-                  className="p-2 rounded-full hover:bg-black/10 dark:hover:bg-white/10 transition-colors duration-200"
+                  className="p-2 rounded-full hover:bg-black/10 dark:hover:bg-white/10 transition-colors duration-200 ml-2"
                   title={navigationVisible ? t.hideNav : t.showNav}
                 >
                   {navigationVisible ? <EyeOff size={18} /> : <Eye size={18} />}
                 </button>
               </div>
-              
+
               <div className="flex items-center space-x-4">
                 {/* Music Player Button */}
                 <MusicPlayer darkMode={darkMode} autoPlay={musicEnabled} />
